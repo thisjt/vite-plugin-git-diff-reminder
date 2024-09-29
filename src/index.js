@@ -2,11 +2,11 @@ const ignoredPathsPreset = ['.svelte-kit/'];
 import { exec } from 'child_process';
 
 /**
- * @template {import('./types').Options} Options
+ * @template {import('./index.d.ts').Options} Options
  */
 
 /**
- * @param {Options} options
+ * @param {Options} [options]
  * @param {Options['ignoredPaths']} [options.ignoredPaths] Contains a list of folders to be ignored on hot update
  * @example ['.svelte-kit/', 'donotincludethisfolder/']
  * @param {Options['command']} [options.command] Command to be run during every hot update. Defaults to `git --no-pager diff`
@@ -17,6 +17,8 @@ import { exec } from 'child_process';
  * @example '⛔⛔⛔ You have {totalLinesChanged} lines of unstaged changes. I think it\'s time to commit! ⛔⛔⛔'
  */
 export default function gitDiffReminder(options) {
+	if (!options) options = {};
+
 	const ignoredPaths = [...ignoredPathsPreset, ...(options.ignoredPaths || [])];
 	options.threshold = options.threshold || 50;
 
