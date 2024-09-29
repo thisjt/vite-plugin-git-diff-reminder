@@ -1,0 +1,24 @@
+name: NPM Registry Publisher
+
+on:
+    release:
+        types: [published]
+    workflow_dispatch:
+
+jobs:
+    build:
+        environment:
+            name: Publish to NPM Registry
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+            - uses: pnpm/action-setup@v4
+              name: install pnpm
+              with:
+                  version: 9
+                  run_install: false
+            - name: publish
+              run: pnpm publish --no-git-checks
+              env:
+                  NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
