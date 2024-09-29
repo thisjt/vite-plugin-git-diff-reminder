@@ -1,3 +1,5 @@
+import type gitDiffReminder from '.';
+
 export type Options = {
 	ignoredPaths?: string[];
 	command?: string;
@@ -5,3 +7,5 @@ export type Options = {
 	customInfo?: string;
 	customWarn?: string;
 };
+
+export type gitDiffReminder = typeof gitDiffReminder;
