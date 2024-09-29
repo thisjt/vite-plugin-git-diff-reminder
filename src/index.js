@@ -2,7 +2,7 @@ const ignoredPathsPreset = ['.svelte-kit/'];
 import { exec } from 'child_process';
 
 /**
- * @template {import('./index.d.ts').Options} Options
+ * @template {import('./types.d.ts').Options} Options
  */
 
 /**
