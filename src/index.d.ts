@@ -5,5 +5,3 @@ export type Options = {
 	customInfo?: string;
 	customWarn?: string;
 };
-
-declare module 'vite-plugin-git-diff-reminder';
