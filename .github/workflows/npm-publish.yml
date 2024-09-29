@@ -13,12 +13,7 @@ jobs:
         steps:
             - name: checkout
               uses: actions/checkout@v4
-            - uses: pnpm/action-setup@v4
-              name: install pnpm
-              with:
-                  version: 9
-                  run_install: false
             - name: publish
-              run: pnpm publish --no-git-checks
+              run: npm publish --no-git-checks
               env:
                   NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
