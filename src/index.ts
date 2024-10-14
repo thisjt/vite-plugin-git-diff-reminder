@@ -1,9 +1,13 @@
 const ignoredPathsPreset = ['.svelte-kit/'];
 import { exec } from 'child_process';
 
-/**
- * @template {import('./types.d.ts').Options} Options
- */
+type Options = {
+	ignoredPaths?: string[];
+	command?: string;
+	threshold?: number;
+	customInfo?: string;
+	customWarn?: string;
+};
 
 /**
  * @param {Options} [options]
@@ -16,15 +20,17 @@ import { exec } from 'child_process';
  * @param {Options['customWarn']} [options.customWarn] Personalize the warn text being shown during every hot update. Use `{thresold}` and `{totalLinesChanged}` as placeholders
  * @example '⛔⛔⛔ You have {totalLinesChanged} lines of unstaged changes. I think it\'s time to commit! ⛔⛔⛔'
  */
-export default function gitDiffReminder(options) {
-	if (!options) options = {};
+export default function gitDiffReminder(options: Options) {
+	if (!options)
+		options = {
+			threshold: 50,
+		};
 
 	const ignoredPaths = [...ignoredPathsPreset, ...(options.ignoredPaths || [])];
-	options.threshold = options.threshold || 50;
 
 	return {
 		name: 'git-diff-reminder',
-		handleHotUpdate({ file }) {
+		handleHotUpdate({ file }: { file: string[] }) {
 			for (let i = 0; i < ignoredPaths.length; i++) {
 				const ignoredPath = ignoredPaths[i];
 				if (file.includes(ignoredPath)) return;
@@ -44,13 +50,16 @@ export default function gitDiffReminder(options) {
 					}
 				});
 
+				options.threshold = options.threshold || 50;
+
 				const totalLinesChanged = addedLines > removedLines ? addedLines : removedLines;
 				if (totalLinesChanged < options.threshold) {
 					if (options.customInfo)
-						console.log(options.customInfo.replaceAll('{threshold}', options.threshold).replaceAll('{totalLinesChanged}', options.totalLinesChanged));
+						console.log(options.customInfo.replaceAll('{threshold}', `${options.threshold}`).replaceAll('{totalLinesChanged}', `${totalLinesChanged}`));
 					else console.log(`All good to go. You have less than ${options.threshold} [${totalLinesChanged}] lines of unstaged changes.`);
 				} else {
-					if (options.customWarn) console.warn(options.customWarn.replaceAll('{threshold}', options.threshold).replaceAll('{totalLinesChanged}'));
+					if (options.customWarn)
+						console.warn(options.customWarn.replaceAll('{threshold}', `${options.threshold}`).replaceAll('{totalLinesChanged}', `${totalLinesChanged}`));
 					else console.warn(`⛔⛔⛔ You have ${totalLinesChanged} lines of unstaged changes. I think it's time to commit! ⛔⛔⛔`);
 				}
 			});
