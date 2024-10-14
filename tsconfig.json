@@ -1,0 +1,14 @@
+{
+	"compilerOptions": {
+		"target": "es2021",
+		"module": "ESNext",
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"strict": true,
+		"resolveJsonModule": true,
+		"skipLibCheck": true,
+		"moduleResolution": "Bundler",
+		"noEmit": true
+	},
+	"include": ["./src/**/*"]
+}
