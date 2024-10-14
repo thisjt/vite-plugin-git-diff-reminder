@@ -1,4 +1,4 @@
-name: NPM Registry Publisher
+name: publish to npm registry
 
 on:
     release:
@@ -8,12 +8,33 @@ on:
 jobs:
     build:
         environment:
-            name: Publish to NPM Registry
+            name: publish to npm registry
         runs-on: ubuntu-latest
         steps:
             - name: checkout
               uses: actions/checkout@v4
+            - uses: pnpm/action-setup@v4
+              name: install pnpm
+              with:
+                  version: 9
+                  run_install: false
+            - name: install nodejs
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 22
+                  registry-url: https://registry.npmjs.org/
+            - name: install dependencies
+              run: pnpm install
+            - name: test
+              run: pnpm test
+            - name: build
+              run: pnpm build
+            - name: print tree
+              uses: jaywcjlove/github-action-folder-tree@main
+              with:
+                  exclude: 'node_modules|.git'
+                  depth: 3
             - name: publish
-              run: npm publish --no-git-checks
+              run: pnpm publish --no-git-checks
               env:
                   NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
