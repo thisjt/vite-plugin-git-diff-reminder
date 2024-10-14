@@ -2,13 +2,23 @@
 	"name": "vite-plugin-git-diff-reminder",
 	"version": "0.0.6",
 	"description": "Adds a simple reminder on the vite dev console on edited lines of code.",
-	"module": "src/index.js",
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.cts",
 	"exports": {
-		".": {
-			"import": "./src/index.js"
+		"require": {
+			"types": "./dist/index.d.cts",
+			"default": "./dist/index.cjs"
+		},
+		"import": {
+			"types": "./dist/index.d.mts",
+			"default": "./dist/index.mjs"
 		}
 	},
-	"scripts": {},
+	"private": false,
+	"scripts": {
+		"build": "pkgroll"
+	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/thisjt/vite-plugin-git-diff-reminder.git"
