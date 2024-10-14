@@ -7,11 +7,20 @@ Usage:
 ```js
 import gitDiffReminder from 'vite-plugin-git-diff-reminder';
 
+// Use default config values (see below on what the default values are)
+export default defineConfig(() => {
+  return {
+    plugins: [gitDiffReminder()]
+  }
+})
+
+// Config values you can modify
 export default defineConfig(() => {
   return {
     plugins: [
       gitDiffReminder({
-        // All config values here are their corresponding default values. You may override them if needed or leave them empty.
+        // All config values here are their corresponding default values.
+        // You may override them if needed or leave them empty.
         ignoredPaths: ['.svelte-kit/'],
         command: 'git --no-pager diff',
         threshold: 50,
