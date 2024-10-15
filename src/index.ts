@@ -20,7 +20,7 @@ type Options = {
  * @param {Options['customWarn']} [options.customWarn] Personalize the warn text being shown during every hot update. Use `{thresold}` and `{totalLinesChanged}` as placeholders
  * @example '⛔⛔⛔ You have {totalLinesChanged} lines of unstaged changes. I think it\'s time to commit! ⛔⛔⛔'
  */
-export default function gitDiffReminder(options: Options) {
+export default function gitDiffReminder(options: Options | undefined) {
 	if (!options)
 		options = {
 			threshold: 50,
