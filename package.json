@@ -1,6 +1,6 @@
 {
 	"name": "vite-plugin-git-diff-reminder",
-	"version": "0.1.3",
+	"version": "0.1.4",
 	"description": "Adds a simple reminder on the vite dev console on edited lines of code.",
 	"main": "./dist/index.cjs",
 	"module": "./dist/index.mjs",
