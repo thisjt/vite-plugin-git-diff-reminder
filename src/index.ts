@@ -1,5 +1,6 @@
 const ignoredPathsPreset = ['.svelte-kit/'];
 import { exec } from 'child_process';
+import { type HmrContext } from 'vite';
 
 type Options = {
 	ignoredPaths?: string[];
@@ -30,10 +31,10 @@ export default function gitDiffReminder(options?: Options) {
 
 	return {
 		name: 'git-diff-reminder',
-		handleHotUpdate({ file }: { file: string[] }) {
+		handleHotUpdate(hhu: HmrContext) {
 			for (let i = 0; i < ignoredPaths.length; i++) {
 				const ignoredPath = ignoredPaths[i];
-				if (file.includes(ignoredPath)) return;
+				if (hhu.file.includes(ignoredPath)) return;
 			}
 
 			exec(options.command || 'git --no-pager diff', (err, stdout) => {
